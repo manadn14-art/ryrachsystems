@@ -18,7 +18,7 @@ const WHY = [
 ];
 
 export default function Careers() {
-  useDocMeta('Careers', 'Open roles at Ryrach Systems — software developers, designers and technology internships.');
+  useDocMeta('Careers', 'Open roles at Ryrach Systems — sales, software development, design and technology internships.');
   const [applyJob, setApplyJob] = useState(null);
   const jobs = openJobs();
 
@@ -58,11 +58,22 @@ export default function Careers() {
                   <div className="job-meta">
                     <span className="meta-chip mono"><Icon name="briefcase" size={13} /> {item.job.type}</span>
                     <span className="meta-chip mono"><Icon name="pin" size={13} /> {item.job.location}</span>
+                    {item.job.deadline && (
+                      <span className="meta-chip deadline-chip mono"><Icon name="clock" size={13} /> Apply by {item.job.deadline}</span>
+                    )}
                   </div>
                   <p>{item.job.description}</p>
                   <ul className="plain-list">
                     {item.job.points.map((pt) => <li key={pt}><Icon name="arrowRight" size={14} /> {pt}</li>)}
                   </ul>
+                  {item.job.requirements && (
+                    <div>
+                      <p className="sol-label mono">What we’re looking for</p>
+                      <ul className="plain-list">
+                        {item.job.requirements.map((r) => <li key={r}><Icon name="check" size={14} /> {r}</li>)}
+                      </ul>
+                    </div>
+                  )}
                   <div className="skills">
                     {item.job.skills.map((s) => <span className="skill mono" key={s}>{s}</span>)}
                   </div>

@@ -32,6 +32,9 @@ export default function JobDetail() {
             <div className="job-meta">
               <span className="meta-chip mono"><Icon name="briefcase" size={13} /> {job.type}</span>
               <span className="meta-chip mono"><Icon name="pin" size={13} /> {job.location}</span>
+              {job.deadline && (
+                <span className="meta-chip deadline-chip mono"><Icon name="clock" size={13} /> Apply by {job.deadline}</span>
+              )}
             </div>
           </Reveal>
           <Reveal delay={180} className="page-actions">
@@ -54,8 +57,16 @@ export default function JobDetail() {
               {job.points.map((pt) => <li key={pt}><Icon name="arrowRight" size={14} /> {pt}</li>)}
             </ul>
           </Reveal>
+          {job.requirements && (
+            <Reveal delay={110}>
+              <h2 className="h3">What we’re looking for</h2>
+              <ul className="plain-list">
+                {job.requirements.map((r) => <li key={r}><Icon name="check" size={14} /> {r}</li>)}
+              </ul>
+            </Reveal>
+          )}
           <Reveal delay={140}>
-            <h2 className="h3">Skills we’re looking for</h2>
+            <h2 className="h3">Skills we value</h2>
             <div className="skills">
               {job.skills.map((s) => <span className="skill mono" key={s}>{s}</span>)}
             </div>
@@ -63,7 +74,8 @@ export default function JobDetail() {
           <Reveal delay={200}>
             <h2 className="h3">How to apply</h2>
             <p>
-              Use the Apply button, complete the short form and attach your CV. Our recruitment
+              Use the Apply button, complete the short form and attach your CV and academic
+              documents. Applications close on <strong>{job.deadline}</strong>. Our recruitment
               team reviews every application and will be in touch through the details you provide.
             </p>
           </Reveal>

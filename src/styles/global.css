@@ -749,3 +749,6 @@ a.aside-line:hover { color: var(--text); }
 .admin-empty { text-align: center; color: var(--dim); padding: 2.5rem 0; }
 .admin-err { color: var(--red); font-size: 0.9rem; margin: 0.8rem 0; }
 .admin-label { display: block; font: 500 0.88rem var(--font-b); color: var(--text); margin: 0.9rem 0 0.35rem; }
+
+.deadline-chip { border-color: rgba(255, 171, 99, 0.45); color: var(--orange); background: rgba(255, 171, 99, 0.07); }
+.deadline-chip .icon { color: var(--orange); }
