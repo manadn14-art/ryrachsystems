@@ -7,13 +7,15 @@ import { submitNetlifyFormWithFiles } from '../lib/netlify.js';
 
 const EMPTY = {
   'bot-field': '', fullName: '', email: '', phone: '', location: '',
-  portfolio: '', years: '', coverLetter: '', additional: '',
+  portfolio: '', years: '', preferredOffice: '', coverLetter: '', additional: '',
 };
-const MAX_CV_MB = 5;
+const MAX_FILE_MB = 5;
+const OFFICES = ['Select office…', 'Blantyre', 'Lilongwe', 'Mzuzu'];
 
 export default function ApplicationModal({ job, open, onClose }) {
   const [form, setForm] = useState(EMPTY);
-  const [file, setFile] = useState(null);
+  const [cv, setCv] = useState(null);
+  const [academics, setAcademics] = useState(null);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
 
@@ -24,10 +26,17 @@ export default function ApplicationModal({ job, open, onClose }) {
     setErrors((er) => ({ ...er, [name]: undefined }));
   };
 
-  const onFile = (f) => {
-    setFile(f);
+  const onCv = (f) => {
+    setCv(f);
     setErrors((er) => ({ ...er, cv: undefined }));
   };
+
+  const onAcademics = (f) => {
+    setAcademics(f);
+    setErrors((er) => ({ ...er, academics: undefined }));
+  };
+
+  const fileOk = (f) => f && f.size <= MAX_FILE_MB * 1024 * 1024;
 
   const validate = () => {
     const er = {};
@@ -35,9 +44,12 @@ export default function ApplicationModal({ job, open, onClose }) {
     if (!isEmail(form.email)) er.email = 'Please enter a valid email address.';
     if (!required(form.location)) er.location = 'Please tell us where you’re based.';
     if (!required(form.years)) er.years = 'Please select your experience level.';
+    if (!required(form.preferredOffice) || form.preferredOffice === 'Select office…') er.preferredOffice = 'Please choose the office you’re applying for.';
     if (!required(form.coverLetter)) er.coverLetter = 'A short cover letter is required.';
-    if (!file) er.cv = 'Please attach your CV.';
-    else if (file.size > MAX_CV_MB * 1024 * 1024) er.cv = `CV must be under ${MAX_CV_MB}MB.`;
+    if (!cv) er.cv = 'Please attach your CV.';
+    else if (!fileOk(cv)) er.cv = `CV must be under ${MAX_FILE_MB}MB.`;
+    if (!academics) er.academics = 'Please attach your certificates or transcripts.';
+    else if (!fileOk(academics)) er.academics = `Academic documents must be under ${MAX_FILE_MB}MB.`;
     return er;
   };
 
@@ -53,7 +65,7 @@ export default function ApplicationModal({ job, open, onClose }) {
       await submitNetlifyFormWithFiles(
         'job-application',
         { ...form, position: job.title },
-        [['cv', file]]
+        [['cv', cv], ['academics', academics]]
       );
       setStatus('success');
     } catch {
@@ -66,7 +78,8 @@ export default function ApplicationModal({ job, open, onClose }) {
     setTimeout(() => {
       setStatus('idle');
       setForm(EMPTY);
-      setFile(null);
+      setCv(null);
+      setAcademics(null);
       setErrors({});
     }, 300);
   };
@@ -78,7 +91,7 @@ export default function ApplicationModal({ job, open, onClose }) {
           title="Application received."
           actions={<button type="button" className="btn btn-ghost" onClick={close}>Close</button>}
         >
-          <p>Thank you for applying. Our recruitment team will review your application and the details you provided.</p>
+          <p>Thank you for applying. Our recruitment team will review your application and the documents you provided.</p>
         </FormSuccess>
       ) : (
         <form name="job-application" onSubmit={onSubmit} noValidate>
@@ -87,8 +100,16 @@ export default function ApplicationModal({ job, open, onClose }) {
             <Field label="Full name" name="fullName" value={form.fullName} onChange={set('fullName')} error={errors.fullName} required autoComplete="name" />
             <Field label="Email" name="email" type="email" value={form.email} onChange={set('email')} error={errors.email} required autoComplete="email" />
             <Field label="Phone" name="phone" type="tel" value={form.phone} onChange={set('phone')} autoComplete="tel" />
-            <Field label="Location" name="location" value={form.location} onChange={set('location')} error={errors.location} required placeholder="City, country" />
-            <Field label="LinkedIn / Portfolio" name="portfolio" value={form.portfolio} onChange={set('portfolio')} placeholder="https://" />
+            <Field label="Where are you based?" name="location" value={form.location} onChange={set('location')} error={errors.location} required placeholder="Town / city" />
+            <SelectField
+              label="Office you’re applying for"
+              name="preferredOffice"
+              value={form.preferredOffice}
+              onChange={set('preferredOffice')}
+              error={errors.preferredOffice}
+              required
+              options={OFFICES}
+            />
             <SelectField
               label="Years of experience"
               name="years"
@@ -98,6 +119,7 @@ export default function ApplicationModal({ job, open, onClose }) {
               required
               options={['Select…', '0–1 years', '1–3 years', '3–5 years', '5–10 years', '10+ years']}
             />
+            <Field label="LinkedIn / Portfolio (optional)" name="portfolio" value={form.portfolio} onChange={set('portfolio')} placeholder="https://" span2 />
             <Field label="Position" name="position-display" value={job.title} onChange={() => {}} span2 />
             <TextArea
               label="Cover letter"
@@ -112,12 +134,22 @@ export default function ApplicationModal({ job, open, onClose }) {
             <FileField
               label="CV"
               name="cv"
-              file={file}
-              onFile={onFile}
+              file={cv}
+              onFile={onCv}
               error={errors.cv}
               required
               accept=".pdf,.doc,.docx"
               hint="Attach CV — PDF or DOC, max 5MB"
+            />
+            <FileField
+              label="Academic documents"
+              name="academics"
+              file={academics}
+              onFile={onAcademics}
+              error={errors.academics}
+              required
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              hint="Certificates / transcripts — PDF or image, max 5MB"
             />
             <TextArea
               label="Additional information (optional)"
