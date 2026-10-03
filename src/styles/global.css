@@ -730,3 +730,22 @@ a.aside-line:hover { color: var(--text); }
   object-fit: cover; display: block;
   border: 1px solid rgba(37, 211, 102, 0.55);
 }
+
+/* ============ Admin dashboard ============ */
+.admin-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.admin-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.admin-tab { padding: 0.5rem 1.05rem; border-radius: 999px; border: 1px solid var(--line); background: none; color: var(--muted); cursor: pointer; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+.admin-tab.active { color: var(--text); border-color: var(--purple); background: rgba(143, 123, 255, 0.1); }
+.admin-card { border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, 0.018); padding: 1.1rem 1.2rem; margin-bottom: 0.9rem; }
+.admin-card-head { display: flex; justify-content: space-between; gap: 0.8rem; align-items: center; flex-wrap: wrap; cursor: pointer; }
+.admin-card-name { font: 600 1.02rem var(--font-d); color: var(--text); }
+.admin-sub { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin-top: 0.55rem; }
+.status-select { max-width: 170px; padding: 0.4rem 0.7rem; font-size: 0.85rem; }
+.admin-details { margin-top: 0.9rem; border-top: 1px solid var(--line); padding-top: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-line { font-size: 0.9rem; color: var(--muted); overflow-wrap: anywhere; }
+.admin-line strong { color: var(--text); font-weight: 600; }
+.admin-file-btn { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--line-2); border-radius: 9px; padding: 0.4rem 0.8rem; color: var(--purple-2); font-size: 0.85rem; cursor: pointer; background: none; }
+.admin-file-btn:hover { border-color: var(--purple); }
+.admin-empty { text-align: center; color: var(--dim); padding: 2.5rem 0; }
+.admin-err { color: var(--red); font-size: 0.9rem; margin: 0.8rem 0; }
+.admin-label { display: block; font: 500 0.88rem var(--font-b); color: var(--text); margin: 0.9rem 0 0.35rem; }
