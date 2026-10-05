@@ -23,10 +23,12 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Close the mobile menu whenever the route changes
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  // Escape closes the menu; lock body scroll while open
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
@@ -39,42 +41,45 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container nav-inner">
-        <Link to="/" className="nav-brand" aria-label="Ryrach Systems — home">
-          <Logo />
-        </Link>
-
-        <nav className="nav-links" aria-label="Primary">
-          {LINKS.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.end}
-              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-            >
-              {l.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="nav-right">
-          <Link to="/request-demo" className="btn btn-primary btn-sm nav-cta">
-            Request a Demo
+    <>
+      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+        <div className="container nav-inner">
+          <Link to="/" className="nav-brand" aria-label="Ryrach Systems — home">
+            <Logo />
           </Link>
-          <button
-            type="button"
-            className={`nav-toggle ${open ? 'open' : ''}`}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span /><span />
-          </button>
-        </div>
-      </div>
 
+          <nav className="nav-links" aria-label="Primary">
+            {LINKS.map((l) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.end}
+                className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              >
+                {l.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="nav-right">
+            <Link to="/request-demo" className="btn btn-primary btn-sm nav-cta">
+              Request a Demo
+            </Link>
+            <button
+              type="button"
+              className={`nav-toggle ${open ? 'open' : ''}`}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span /><span />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Menu lives OUTSIDE the header so the header's blur effect can never trap it */}
       <div id="mobile-menu" className={`mobile-menu ${open ? 'open' : ''}`} aria-hidden={!open}>
         <nav className="mm-nav" aria-label="Mobile">
           {LINKS.map((l, i) => (
@@ -100,6 +105,6 @@ export default function Navbar() {
           </Link>
         </nav>
       </div>
-    </header>
+    </>
   );
 }
