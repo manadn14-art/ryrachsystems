@@ -97,6 +97,7 @@ export default function AgentDashboard() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [flash, setFlash] = useState(null) // { ok, text }
+  const [copiedId, setCopiedId] = useState(null)
 
   const [sel, setSel] = useState(null)
   const [client, setClient] = useState(EMPTY_CLIENT)
@@ -124,6 +125,14 @@ export default function AgentDashboard() {
   async function doLogout() {
     await agentLogout()
     navigate('/agents')
+  }
+
+  async function copyCode(l) {
+    try {
+      await navigator.clipboard.writeText(l.license_code || '')
+      setCopiedId(l.id)
+      setTimeout(() => setCopiedId(null), 1500)
+    } catch (e) { /* clipboard not available — agent can long-press to copy */ }
   }
 
   if (error && !data) {
@@ -218,7 +227,14 @@ export default function AgentDashboard() {
     e.preventDefault()
     setBusy(true)
     setPayMsg(null)
-    const res = await agentRecordPayment({ ...pay })
+    // Only send fields that actually have a value — empty optionals
+    // are left out so the database never sees blank text.
+    const payload = { kind: pay.kind, method: pay.method, amount_mk: pay.amount_mk }
+    if (pay.client_name) payload.client_name = pay.client_name
+    if (pay.reference) payload.reference = pay.reference
+    if (pay.note) payload.note = pay.note
+    if (pay.request_id) payload.request_id = pay.request_id
+    const res = await agentRecordPayment(payload)
     setBusy(false)
     if (res.ok) {
       setPayMsg({ ok: true, text: 'Payment recorded. Your commission is booked the moment the admin confirms it.' })
@@ -415,7 +431,7 @@ export default function AgentDashboard() {
             return (
               <div key={l.id} className="ap-card">
                 <div className="ap-row">
-                  <strong>{l.license_code || '(code coming)'}</strong>
+                  <strong className="ap-code">{l.license_code || '(code coming)'}</strong>
                   <span className={c.cls}>{c.txt}</span>
                 </div>
                 <p className="ap-muted">
@@ -423,6 +439,13 @@ export default function AgentDashboard() {
                   <br />
                   Started {fmtDate(l.starts_at)} · Expires {fmtDate(l.expires_at)}
                 </p>
+                {l.license_code ? (
+                  <div className="ap-actions">
+                    <button type="button" className="ap-btn-sm" onClick={() => copyCode(l)}>
+                      {copiedId === l.id ? 'Copied' : 'Copy code'}
+                    </button>
+                  </div>
+                ) : null}
               </div>
             )
           })}
