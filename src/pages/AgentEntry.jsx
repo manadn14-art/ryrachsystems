@@ -2,9 +2,9 @@
 // RYRACH SYSTEMS — AGENTS PORTAL (LOGIN)
 // Agents sign in with their Agent number + PIN.
 // ============================================================
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { agentLogin } from '../lib/agents'
+import { agentLogin, loadAgentSession } from '../lib/agents'
 import { WHATSAPP_LINK } from '../lib/config'
 
 export default function AgentEntry() {
@@ -13,6 +13,11 @@ export default function AgentEntry() {
   const [pin, setPin] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+
+  // Already signed in on this phone? Go straight to the dashboard.
+  useEffect(() => {
+    if (loadAgentSession()) navigate('/agents/dashboard', { replace: true })
+  }, [navigate])
 
   async function submit(e) {
     e.preventDefault()
