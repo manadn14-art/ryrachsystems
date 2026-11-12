@@ -1,0 +1,160 @@
+/* ============================================================
+   RYRACH SYSTEMS — AGENTS PORTAL STYLES (ap-*)
+   Uses the site's global colour variables from global.css,
+   so the portal always matches the brand automatically.
+   ============================================================ */
+
+.ap-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+/* ---- cards ---- */
+.ap-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.ap-card strong { font-family: var(--font-d); }
+.ap-center { text-align: center; }
+.ap-center h2 { font: 700 1.4rem var(--font-d); }
+
+/* ---- login ---- */
+.ap-login { max-width: 420px; margin: 2.5rem auto 0; padding: 2rem 1.4rem; text-align: center; }
+.ap-login h1 { font: 700 1.7rem var(--font-d); margin: 0.8rem 0 0.2rem; }
+.ap-login form { text-align: left; margin-top: 1.2rem; }
+.ap-logo { width: 64px; height: 64px; object-fit: contain; }
+.ap-logo-sm { width: 34px; height: 34px; object-fit: contain; }
+
+/* ---- text ---- */
+.ap-muted { color: var(--muted); font-size: 0.92rem; line-height: 1.5; }
+.ap-hint { color: var(--dim); font-size: 0.85rem; margin-top: 1rem; line-height: 1.5; }
+.ap-wrap a { color: var(--purple-2); }
+.ap-h3 { font: 600 1.05rem var(--font-d); margin: 1.4rem 0 0.7rem; }
+.ap-big { font: 700 1.35rem var(--font-d); color: var(--purple-2); margin: 0.4rem 0; }
+.ap-pre { white-space: pre-wrap; color: var(--text); font-size: 0.95rem; line-height: 1.6; }
+.ap-earn { color: var(--green); font-weight: 600; margin-top: 0.4rem; }
+
+/* ---- form ---- */
+.ap-label { display: block; font: 600 0.85rem var(--font-d); margin: 0.9rem 0 0.35rem; color: var(--muted); }
+.ap-input {
+  width: 100%; box-sizing: border-box;
+  background: var(--bg-alt);
+  border: 1px solid var(--line-2);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  color: var(--text);
+  font: 400 1rem var(--font-b);
+}
+.ap-input:focus { outline: none; border-color: var(--purple); }
+textarea.ap-input { resize: vertical; }
+
+/* ---- buttons ---- */
+.ap-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  margin-top: 1rem;
+  background: var(--purple); color: #0b0817;
+  font: 600 0.98rem var(--font-d);
+  border: none; border-radius: 12px;
+  padding: 0.8rem 1.4rem; cursor: pointer;
+}
+.ap-btn:disabled { opacity: 0.6; cursor: wait; }
+.ap-btn-full { width: 100%; }
+.ap-btn-sm {
+  background: rgba(143, 123, 255, 0.14); color: var(--purple-2);
+  border: 1px solid var(--line-2); border-radius: 10px;
+  font: 600 0.82rem var(--font-d); padding: 0.45rem 0.8rem; cursor: pointer;
+}
+.ap-btn-ghost { background: transparent; color: var(--muted); }
+
+/* ---- flash / status notes ---- */
+.ap-note {
+  border-radius: 10px; padding: 0.7rem 0.9rem;
+  font-size: 0.92rem; line-height: 1.5; margin-top: 0.9rem;
+}
+.ap-note-ok { background: rgba(74, 222, 128, 0.12); border: 1px solid rgba(74, 222, 128, 0.4); color: var(--green); }
+.ap-note-bad { background: rgba(248, 113, 113, 0.12); border: 1px solid rgba(248, 113, 113, 0.4); color: var(--red); }
+.ap-note-wait { background: rgba(255, 171, 99, 0.12); border: 1px solid rgba(255, 171, 99, 0.4); color: var(--orange); }
+
+/* ---- top bar ---- */
+.ap-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+.ap-top-id { display: flex; flex-direction: column; margin-right: auto; line-height: 1.25; min-width: 0; }
+.ap-top-id strong { font: 600 1rem var(--font-d); }
+.ap-top-id span { color: var(--dim); font-size: 0.8rem; font-family: var(--font-m); }
+
+/* ---- tabs ---- */
+.ap-tabs {
+  display: flex; gap: 0.45rem; overflow-x: auto;
+  padding-bottom: 0.4rem; margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.ap-tab {
+  flex: 0 0 auto; position: relative;
+  background: var(--panel); color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px;
+  font: 600 0.9rem var(--font-d);
+  padding: 0.55rem 1.05rem; cursor: pointer;
+}
+.ap-tab-on { background: var(--purple); color: #0b0817; border-color: var(--purple); }
+.ap-dot {
+  position: absolute; top: -2px; right: -2px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--red); border: 2px solid var(--bg);
+}
+
+/* ---- status chips ---- */
+.ap-chip {
+  display: inline-block; flex: 0 0 auto;
+  border-radius: 999px; padding: 0.28rem 0.7rem;
+  font: 600 0.78rem var(--font-d);
+  background: rgba(148, 163, 198, 0.14); color: var(--muted);
+  text-transform: capitalize;
+}
+.ap-chip-ok { background: rgba(74, 222, 128, 0.14); color: var(--green); }
+.ap-chip-wait { background: rgba(255, 171, 99, 0.14); color: var(--orange); }
+.ap-chip-bad { background: rgba(248, 113, 113, 0.14); color: var(--red); }
+
+/* ---- list rows ---- */
+.ap-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; }
+.ap-row > div { min-width: 0; }
+
+/* ---- KPI cards ---- */
+.ap-kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 1rem; }
+.ap-kpi {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 0.9rem 1rem;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.ap-kpi-wide { grid-column: 1 / -1; }
+.ap-kpi-n { font: 700 1.3rem var(--font-d); color: var(--purple-2); overflow-wrap: anywhere; }
+.ap-kpi-l { color: var(--dim); font-size: 0.8rem; }
+
+/* ---- info card (how your month works) ---- */
+.ap-info ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+.ap-info strong { color: var(--text); }
+
+/* ---- plans (sell tab) ---- */
+.ap-plans { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.7rem; }
+.ap-plan {
+  background: rgba(143, 123, 255, 0.1);
+  border: 1px solid var(--line-2); border-radius: 10px;
+  color: var(--purple-2); font: 600 0.85rem var(--font-d);
+  padding: 0.55rem 0.85rem; cursor: pointer;
+}
+.ap-plan:active { transform: translateY(1px); }
+.ap-back {
+  background: none; border: none; color: var(--muted);
+  font: 600 0.88rem var(--font-b); cursor: pointer; padding: 0;
+  margin-bottom: 0.4rem;
+}
+
+/* ---- license code ---- */
+.ap-code { font-family: var(--font-m); letter-spacing: 0.03em; overflow-wrap: anywhere; }
+.ap-actions { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
+
+/* ---- small screens ---- */
+@media (max-width: 480px) {
+  .ap-wrap { padding: 1rem 0.8rem 2.5rem; }
+  .ap-kpi-n { font-size: 1.15rem; }
+  .ap-top { gap: 0.45rem; }
+  .ap-login { margin-top: 1.5rem; }
+}
