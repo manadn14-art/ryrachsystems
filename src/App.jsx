@@ -18,6 +18,7 @@ import Developers from './pages/Developers.jsx';
 import Legal from './pages/Legal.jsx';
 import Admin from './pages/Admin.jsx';
 import NotFound from './pages/NotFound.jsx';
+import AgentRoutes from './agents/AgentRoutes.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,11 +29,16 @@ function ScrollToTop() {
 }
 
 export default function App() {
+  // The agents portal (/agents and /agents/dashboard) is its own
+  // clean screen — no site navbar, footer or WhatsApp button.
+  const { pathname } = useLocation();
+  const isAgentArea = pathname.startsWith('/agents');
+
   return (
     <>
-      <a className="skip-link" href="#main">Skip to content</a>
+      {!isAgentArea && <a className="skip-link" href="#main">Skip to content</a>}
       <ScrollToTop />
-      <Navbar />
+      {!isAgentArea && <Navbar />}
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -49,12 +55,13 @@ export default function App() {
           <Route path="/privacy" element={<Legal kind="privacy" />} />
           <Route path="/terms" element={<Legal kind="terms" />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/agents/*" element={<AgentRoutes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
-      <BackToTop />
-      <WhatsAppButton />
+      {!isAgentArea && <Footer />}
+      {!isAgentArea && <BackToTop />}
+      {!isAgentArea && <WhatsAppButton />}
     </>
   );
 }

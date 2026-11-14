@@ -3,6 +3,7 @@
    Loaded only by the agent pages (AgentEntry / AgentDashboard).
    Uses the site's global colour variables from global.css,
    so the portal always matches the brand automatically.
+   Complete file — copy it whole over your existing agent.css.
    ============================================================ */
 
 .ap-wrap { max-width: 720px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }

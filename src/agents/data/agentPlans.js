@@ -10,6 +10,8 @@
 // │ numbers here — every price the agent sees comes from     │
 // │ this one file. Nothing else in the app needs to change.  │
 // └──────────────────────────────────────────────────────────┘
+//
+// Complete file — new file, nothing to merge.
 // ============================================================
 
 export const AGENT_CATALOG = [
